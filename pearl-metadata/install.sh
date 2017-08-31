@@ -7,8 +7,10 @@ function post_install(){
     cd "${PEARL_PKGDIR}/powerline-fonts"
     ./install.sh
 
-    info "Installing Adobe fonts..."
     cd ${HOME}/.fonts
+    local font
+
+    info "Installing Adobe fonts..."
     [[ -f ${HOME}/.fonts/SourceSansVariable-Italic.ttf ]] || \
         download https://github.com/adobe-fonts/source-sans-pro/releases/download/variable-fonts/SourceSansVariable-Italic.ttf
     [[ -f ${HOME}/.fonts/SourceSansVariable-Roman.ttf ]] || \
@@ -19,6 +21,31 @@ function post_install(){
         download https://github.com/adobe-fonts/source-code-pro/releases/download/variable-fonts/SourceCodeVariable-Roman.otf
     [[ -f ${HOME}/.fonts/SourceSerifVariable-Roman.otf ]] || \
         download https://github.com/adobe-fonts/source-serif-pro/releases/download/variable-fonts/SourceSerifVariable-Roman.otf
+
+    info "Installing Cantarell fonts..."
+    for font in "Cantarell-Regular" "Cantarell-Bold" "Cantarell-BoldOblique" "Cantarell-Oblique"
+    do
+        [[ -f ${HOME}/.fonts/$font.ttf ]] || \
+            download "https://github.com/google/fonts/blob/master/ofl/cantarell/$font.ttf?raw=true" "$font.ttf"
+    done
+
+    info "Installing Ubuntu fonts..."
+    for font in "Ubuntu-Bold" "Ubuntu-BoldItalic" "Ubuntu-Italic" "Ubuntu-Light" "Ubuntu-LightItalic" "Ubuntu-Medium" "Ubuntu-MediumItalic" "Ubuntu-Regular"
+    do
+        [[ -f ${HOME}/.fonts/$font.ttf ]] || \
+        download "https://github.com/google/fonts/blob/master/ufl/ubuntu/$font.ttf?raw=true" "$font.ttf"
+    done
+
+    font="UbuntuCondensed-Regular"
+    [[ -f ${HOME}/.fonts/$font.ttf ]] || \
+        download "https://github.com/google/fonts/blob/master/ufl/ubuntucondensed/$font.ttf?raw=true" "$font.ttf"
+
+    for font in "UbuntuMono-Bold" "UbuntuMono-BoldItalic" "UbuntuMono-Italic" "UbuntuMono-Regular"
+    do
+        [[ -f ${HOME}/.fonts/$font.ttf ]] || \
+            download "https://github.com/google/fonts/blob/master/ufl/ubuntumono/$font.ttf?raw=true" "$font.ttf"
+    done
+
     fc-cache -f ${HOME}/.fonts
 
     return 0
@@ -50,11 +77,27 @@ function pre_remove(){
     find "${PEARL_PKGDIR}/powerline-fonts" \( -name '*.[o,t]tf' -or -name '*.pcf.gz' \) -type f -printf "%f\0" | \
         xargs -0 -I {} rm -f ${fonts_path}/{}
 
+    local font
+
     info "Removing Adobe fonts..."
-    rm -f ${HOME}/.fonts/SourceSansVariable-Italic.ttf
-    rm -f ${HOME}/.fonts/SourceSansVariable-Roman.ttf
-    rm -f ${HOME}/.fonts/SourceCodeVariable-Italic.ttf
-    rm -f ${HOME}/.fonts/SourceSerifVariable-Roman.otf
+    for font in "SourceSansVariable-Italic.ttf" "SourceSansVariable-Roman.ttf" "SourceCodeVariable-Italic.otf" "SourceCodeVariable-Roman.otf" "SourceSerifVariable-Roman.otf"
+    do
+        rm -f "${HOME}/.fonts/$font"
+    done
+
+    info "Removing Cantarell fonts..."
+    for font in "Cantarell-Regular" "Cantarell-Bold" "Cantarell-BoldOblique" "Cantarell-Oblique"
+    do
+        rm -f "${HOME}/.fonts/$font.ttf"
+    done
+
+    info "Removing Ubuntu fonts..."
+    for font in "Ubuntu-Bold" "Ubuntu-BoldItalic" "Ubuntu-Italic" "Ubuntu-Light" \
+        "Ubuntu-LightItalic" "Ubuntu-Medium" "Ubuntu-MediumItalic" "Ubuntu-Regular" \
+        "UbuntuMono-Bold" "UbuntuMono-BoldItalic" "UbuntuMono-Italic" "UbuntuMono-Regular" "UbuntuCondensed-Regular"
+    do
+        rm -f "${HOME}/.fonts/$font.ttf"
+    done
 
     fc-cache -vf ${HOME}/.fonts
     fc-cache -vf ${fonts_path}

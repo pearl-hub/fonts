@@ -27,6 +27,8 @@ The list of available fonts are:
   - [Source code pro](https://github.com/adobe-fonts/source-code-pro)
   - [Source sans pro](https://github.com/adobe-fonts/source-sans-pro)
   - [Source serif pro](https://github.com/adobe-fonts/source-serif-pro)
+- [Cantarell fonts](https://github.com/GNOME/cantarell-fonts)
+- [Ubuntu fonts](http://font.ubuntu.com/)
 
 Installation
 ============
