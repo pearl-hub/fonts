@@ -21,14 +21,7 @@ Description
 
 The list of available fonts are:
 
-- [Powerline fonts](https://github.com/powerline/fonts)
-- [Awesome terminal fonts](https://github.com/gabrielelana/awesome-terminal-fonts)
-- [Adobe fonts](https://github.com/adobe-fonts)
-  - [Source code pro](https://github.com/adobe-fonts/source-code-pro)
-  - [Source sans pro](https://github.com/adobe-fonts/source-sans-pro)
-  - [Source serif pro](https://github.com/adobe-fonts/source-serif-pro)
-- [Cantarell fonts](https://github.com/GNOME/cantarell-fonts)
-- [Ubuntu fonts](http://font.ubuntu.com/)
+- [Nerd Fonts]*(https://github.com/ryanoasis/nerd-fonts)*
 
 Installation
 ============
@@ -45,6 +38,7 @@ The `fonts` package requires to have the
 all the installed fonts that needs to be
 removed during the [removal of the package](https://github.com/pearl-core/pearl#remove).
 
+`findutils` is not required in OSX.
 In OSX `findutils` is available via [Homebrew](https://brew.sh/index_it.html).
 
 Troubleshooting
