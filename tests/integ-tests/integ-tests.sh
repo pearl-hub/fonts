@@ -1,29 +1,27 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 source $HOME/.bashrc
 
-pearl install test
+echo -e "y\n\n\n\n" | pearl install test
 
 [ -d $PEARL_HOME/packages/default/test ] || { echo "Error: The package test does not exist after installing it."; exit 1; }
 
-ls -l $HOME/.fonts
-
 if [[ $(uname) == 'Darwin' ]]; then
     ls -l $HOME/Library/Fonts
 else
-    ls -l $HOME/.local/share/fonts
+    [[ -e $HOME/.fonts ]] && ls -l $HOME/.fonts
+    [[ -e $HOME/.local/share/fonts ]] && ls -l $HOME/.local/share/fonts
 fi
 
-pearl update test
+echo -e "y\n\n\n\n" | pearl update test
 
 pearl remove test
 
-ls -l $HOME/.fonts
-
 if [[ $(uname) == 'Darwin' ]]; then
     ls -l $HOME/Library/Fonts
 else
-    ls -l $HOME/.local/share/fonts
+    [[ -e $HOME/.fonts ]] && ls -l $HOME/.fonts
+    [[ -e $HOME/.local/share/fonts ]] && ls -l $HOME/.local/share/fonts
 fi
