@@ -51,6 +51,8 @@ function _install_nerd_fonts() {
 
     _get_installed_nerd_fonts
 
+    font_installed=false
+
     while ask "Do you want to install additional Nerd Fonts?" "N"
     do
         info "For list of all versions: https://github.com/ryanoasis/nerd-fonts/tags"
@@ -67,8 +69,11 @@ function _install_nerd_fonts() {
         unzip -o $fontname.zip
         rm $fontname.zip*
 
+        font_installed=true
         _get_installed_nerd_fonts
     done
+
+    $font_installed && _update_fonts
 
     return 0
 }
@@ -76,8 +81,6 @@ function _install_nerd_fonts() {
 
 function post_install(){
     _install_nerd_fonts
-
-    _update_fonts
 
     return 0
 }
