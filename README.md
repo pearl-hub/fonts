@@ -34,12 +34,13 @@ pearl install fonts
 Dependencies
 ------------
 The `fonts` package requires to have the
-[GNU findutils](https://www.gnu.org/software/findutils/) commands for finding
+[GNU fontutils](https://www.gnu.org/software/fontutils/) commands for finding
 all the installed fonts that needs to be
 removed during the [removal of the package](https://github.com/pearl-core/pearl#remove).
 
-`findutils` is not required in OSX.
-In OSX `findutils` is available via [Homebrew](https://brew.sh/index_it.html).
+`fontutils` is not required in OSX but depends on which application you want to
+install the fonts.
+In OSX `fontutils` is available via [Homebrew](https://brew.sh/index_it.html).
 
 Troubleshooting
 ===============
