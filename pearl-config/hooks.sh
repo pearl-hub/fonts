@@ -13,12 +13,18 @@ function _update_fonts() {
 function _clean_up() {
     if osx_detect
     then
-        local nerdfontspath="${HOME}/Library/Fonts/nerd-fonts"
+        local fontpath="${HOME}/Library/Fonts"
     else
-       local nerdfontspath="${HOME}/.local/share/fonts/nerd-fonts"
+       local fontpath="${HOME}/.local/share/fonts"
     fi
+
+    local nerdfontspath="${fontpath}/nerd-fonts"
     # Remove existing fonts first
     [[ -e $nerdfontspath ]] && rm -rf "$nerdfontspath"
+
+    local jetbrainsfontpath="${fontpath}/jet-brains-font"
+    # Remove existing fonts first
+    [[ -e $jetbrainsfontpath ]] && rm -rf "$jetbrainsfontpath"
 
     return 0
 }
@@ -79,8 +85,36 @@ function _install_nerd_fonts() {
 }
 
 
+function _install_jet_brains_font() {
+    info "Installing Jet Brains font (https://www.jetbrains.com/lp/mono/)..."
+    if osx_detect
+    then
+        local fontpath="${HOME}/Library/Fonts/jet-brains-font"
+    else
+        local fontpath="${HOME}/.local/share/fonts/jet-brains-font"
+    fi
+
+    if ask "Do you want to install Jet Brains Font?" "N"
+    then
+        mkdir -p "$fontpath"
+        cd "$fontpath"
+        local fontname="JetBrainsMono-1.0.2"
+
+        download https://download.jetbrains.com/fonts/$fontname.zip
+
+        unzip -o $fontname.zip
+        rm $fontname.zip*
+
+        _update_fonts
+    fi
+
+
+    return 0
+}
+
 function post_install(){
     _install_nerd_fonts
+    _install_jet_brains_font
 
     return 0
 }
