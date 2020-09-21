@@ -22,10 +22,6 @@ function _clean_up() {
     # Remove existing fonts first
     [[ -e $nerdfontspath ]] && rm -rf "$nerdfontspath"
 
-    local jetbrainsfontpath="${fontpath}/jet-brains-font"
-    # Remove existing fonts first
-    [[ -e $jetbrainsfontpath ]] && rm -rf "$jetbrainsfontpath"
-
     return 0
 }
 
@@ -62,7 +58,7 @@ function _install_nerd_fonts() {
     while ask "Do you want to install additional Nerd Fonts?" "N"
     do
         info "For list of all versions: https://github.com/ryanoasis/nerd-fonts/tags"
-        local nerdfontsversion=$(input "Which Nerd Fonts version?" "2.0.0")
+        local nerdfontsversion=$(input "Which Nerd Fonts version?" "2.1.0")
         info "For list of all available fonts take a look at the assets section here: https://github.com/ryanoasis/nerd-fonts/releases/tag/v$nerdfontsversion"
         local fontname=$(input "Which font would you like to install?" "UbuntuMono")
 
@@ -85,36 +81,8 @@ function _install_nerd_fonts() {
 }
 
 
-function _install_jet_brains_font() {
-    info "Installing Jet Brains font (https://www.jetbrains.com/lp/mono/)..."
-    if osx_detect
-    then
-        local fontpath="${HOME}/Library/Fonts/jet-brains-font"
-    else
-        local fontpath="${HOME}/.local/share/fonts/jet-brains-font"
-    fi
-
-    if ask "Do you want to install Jet Brains Font?" "N"
-    then
-        mkdir -p "$fontpath"
-        cd "$fontpath"
-        local fontname="JetBrainsMono-1.0.2"
-
-        download https://download.jetbrains.com/fonts/$fontname.zip
-
-        unzip -o $fontname.zip
-        rm $fontname.zip*
-
-        _update_fonts
-    fi
-
-
-    return 0
-}
-
 function post_install(){
     _install_nerd_fonts
-    _install_jet_brains_font
 
     return 0
 }
