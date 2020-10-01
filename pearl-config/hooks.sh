@@ -29,10 +29,10 @@ function _get_installed_nerd_fonts() {
     info "Currently installed Nerd fonts":
     if osx_detect
     then
-        local nerdfontspath="${HOME}/Library/Fonts/nerd-fonts"
+        local nerdfontspath="$(realpath ${HOME}/Library/Fonts/nerd-fonts)"
         [[ -e $nerdfontspath ]] && ls "$nerdfontspath"
     else
-        local nerdfontspath="${HOME}/.local/share/fonts/nerd-fonts"
+        local nerdfontspath="$(realpath ${HOME}/.local/share/fonts/nerd-fonts)"
         # Disable pipefail as this may fail if list of fonts is empty
         set +o pipefail
         fc-list | grep "$nerdfontspath" | cut -d: -f2 | sort -u
